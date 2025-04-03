@@ -1,6 +1,7 @@
 1 dim buffer$(1000)
 2 dim marks(256)
 3 line = 0
+4 def fn prefix(pre$, st$) = pre$ = mid$(st$, 1, len(pre$))
 10 input "cmd"; cmd$
 20 if cmd$ = "a" then go sub 200
 25 if left$(cmd$, 1) = "a" and len(cmd$) > 2 then go sub 250
@@ -81,7 +82,11 @@
 840 line = newline
 850 go sub 250
 860 return
-1000 rem TODO s
+1000 rem ember "s" command
+1010 input "pattern,substitution"; patt$, sbst$
+1020 go sub 1500
+1030 buffer$(line) = wrk$
+1090 return
 1100 rem ember "t" command
 1110 newline = val(mid$(cmd$, 2))
 1120 cmd$ = "a " + buffer$(line)
@@ -99,3 +104,13 @@
 1410 line = line + int(val(cmd$))
 1420 print buffer$(line)
 1430 return
+1500 rem ember "regex" replacement
+1510 wrk$ = ""
+1520 ln$ = buffer$(line)
+1530 for i = 1 to len(ln$)
+1540     if not fnprefix(patt$, mid$(ln$, i)) then wrk$ = wrk$ + mid$(ln$, i, 1): alrdy = -1
+1550     if not alrdy then wrk$ = wrk$ + sbst$: i = i + len(patt$) - 1
+1560     alrdy = 0
+1570 next i
+1580 return
+
