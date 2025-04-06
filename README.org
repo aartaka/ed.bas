@@ -39,3 +39,5 @@ Commands accessible at the moment:
 - tX :: Copy the current line to after X line.
 - = :: Print current line number.
 - Number :: Move to the numbered line.
+
+And yeah, no file management, because Vintage BASIC has no file reading/writing functions. I might find a more complete implementation someday. But, until then, save your programs in some other way.
