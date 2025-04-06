@@ -6,6 +6,7 @@
 20 if cmd$ = "a" then go sub 200
 25 if left$(cmd$, 1) = "a" and len(cmd$) > 2 then go sub 250
 30 if cmd$ = "c" then go sub 300
+35 if left$(cmd$, 1) = "c" and len(cmd$) > 2 then go sub 350
 40 if cmd$ = "d" then go sub 400
 45 rem if cmd$ = "g" then
 50 if cmd$ = "i" then go sub 500
@@ -48,6 +49,9 @@
 300 rem ember "c" command
 310 input buffer$(line)
 320 return
+350 rem ember "c" command with inline content
+380 buffer$(line) = mid$(cmd$, 3)
+390 return
 400 rem ember "d" command
 410 for i = line to 999
 420     buffer$(i) = buffer$(i+1)
