@@ -1,7 +1,6 @@
 1 dim buffer$(1000)
 2 dim marks(256)
 3 line = 0
-4 def fn prefix(pre$, st$) = pre$ = mid$(st$, 1, len(pre$))
 10 input "cmd"; cmd$
 20 if cmd$ = "a" then go sub 200
 25 if left$(cmd$, 1) = "a" and len(cmd$) > 2 then go sub 250
@@ -109,12 +108,42 @@
 1420 print buffer$(line)
 1430 return
 1500 rem ember "regex" replacement
-1510 wrk$ = ""
-1520 ln$ = buffer$(line)
-1530 for i = 1 to len(ln$)
-1540     if not fnprefix(patt$, mid$(ln$, i)) then wrk$ = wrk$ + mid$(ln$, i, 1): alrdy = -1
-1550     if not alrdy then wrk$ = wrk$ + sbst$: i = i + len(patt$) - 1
-1560     alrdy = 0
-1570 next i
-1580 return
-
+1510 wrk$ = "" :rem buffer to append to
+1520 ln$ = buffer$(line) :rem current line
+1530 mln% = 0 :rem match length
+1540 pi% = 1 :rem index into pattern
+1550 def fn q$(s$,idx) = mid$(s$,idx,1)
+1600 for c = 1 to len(ln$) + 1
+1610     if "" = fnq$(patt$,pi%) and mln% then 1700 :rem ENDMATCH
+1620     if "*" = fnq$(patt$,pi%) then 1800 :rem MATCHARBITRARYMANY
+1630     if fnq$(patt$,pi%) = fnq$(ln$,c) then 1750 :rem SIMPLEMATCH
+1640     wrk$ = wrk$ + fnq$(ln$,c)
+1650     pi% = 1
+1660     mln% = 0
+1670     goto 1950 :rem NEXT
+1700     rem ENDMATCH:
+1710     wrk$ = wrk$ + sbst$
+1720     c = c + mln% - 1
+1730     mln% = 0
+1735     pi% = 1
+1740     goto 1950 :rem NEXT
+1750     rem SIMPLEMATCH:
+1760     mln% = mln% + 1
+1780     pi% = pi% + 1
+1790     goto 1950 :rem NEXT
+1800     rem MATCHARBITRARYMANY:
+1810     pi% = pi% + 1
+1820     rem this is to get the 0-2 pattern chars after the star
+1830     t$ = mid$(patt$, pi%, 1 -(not "*" = fnq$(patt$,pi%+1)))
+1840     for i = c to len(ln$)
+1850         if len(t$) and t$ = mid$(ln$, i, len(t$)) then 1900 :rem ENDWILD
+1860         mln% = mln% + 1
+1870     next i
+1880     if len(t$) then mln% = 0: pi% = 1: wrk$ = wrk$ + mid$(ln$, c): c = len(ln$) + 1
+1890     goto 1950 :rem NEXT
+1900     rem ENDWILD:
+1910     c = i - 1
+1920     pi% = pi% + 1
+1950     rem NEXT:
+1960 next c
+1970 return
