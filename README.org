@@ -1,0 +1,41 @@
+#+TITLE:Implementing ed(1) in BASIC
+
+I have a tradition: implementing ed(1) in whatever tech I touch.
+Like [[https://github.com/bf-enterprise-solutions/ed.bf][with Brainfuck]] (project property of BF Enterprise Solutions.)
+Or C & regex.h (unpublished.)
+And now that I'm dipping my toes in BASIC, I decided I should implement ed in it too!
+
+* Getting Started
+Clone the Git repository:
+#+begin_src sh
+  git clone --recursive https://github.com/aartaka/ed.bas
+#+end_src
+
+And then run ~ed.bas~ with whatever BASIC interpreter you have.
+I use [[https://github.com/lylek/vintage-basic][Vintage BASIC]], so the command is:
+#+begin_src 
+vintbas ed.bas
+# cmd?
+#+end_src
+
+Input your commands and rejoice!
+
+* Commands
+Commands accessible at the moment:
+- a :: Append a line after the current one.
+  - a text :: Append the text following command to after the current line.
+- c :: Replace the current line with inputted one.
+  - c text :: Same, but inline.
+- d :: Delete the line.
+- i :: Insert line before the current one.
+  - i text :: Same, but inline.
+- j :: Join the current line with the next one.
+- k :: Mark the line with an ASCII char.
+  - 'c (quote+char) :: Move to the marked line.
+- mX :: Move the current line to after the provided line.
+- p :: Print current line.
+- q :: Quit.
+- s :: Substitute text in line based on "regex". Will prompt you for pattern and replacement. At the moment, the pattern is literal chars + wildcard (~*~.) Should be enough for most cases. But I realize it's not ed(1)-compliant at all.
+- tX :: Copy the current line to after X line.
+- = :: Print current line number.
+- Number :: Move to the numbered line.
