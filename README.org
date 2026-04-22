@@ -2,6 +2,7 @@
 
 I have a tradition: implementing ed(1) in whatever tech I touch.
 Like [[https://github.com/bf-enterprise-solutions/ed.bf][with Brainfuck]] (project property of BF Enterprise Solutions.)
+Or [[https://github.com/aartaka/ed.modal][Modal]].
 Or C & regex.h (unpublished.)
 And now that I'm dipping my toes in BASIC, I decided I should implement ed in it too!
 
