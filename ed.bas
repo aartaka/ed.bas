@@ -14,12 +14,12 @@
 70 if left$(cmd$, 1) = "k" then go sub 700
 75 rem TODO if cmd$ = "l" then
 80 if left$(cmd$, 1) = "m" then go sub 800
-85 rem TODO if cmd$ = "n" then 700
+85 rem TODO if cmd$ = "n" then
 90 if cmd$ = "p" then print buffer$(line): go to 10
 95 if cmd$ = "q" then end
 100 if cmd$ = "s" then go sub 1000
 110 if left$(cmd$, 1) = "t" then go sub 1100
-115 rem TODO if cmd$ = "v" then 1000
+115 rem TODO if cmd$ = "v" then
 120 if cmd$ = "=" then go sub 1200
 130 if left$(cmd$, 1) = "0" then go sub 1300
 131 if left$(cmd$, 1) = "1" then go sub 1300
